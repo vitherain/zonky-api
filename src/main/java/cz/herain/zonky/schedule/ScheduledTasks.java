@@ -15,13 +15,12 @@ public class ScheduledTasks {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTasks.class);
 
-    private static final String CRON_EVERY_FIVE_SECONDS = "*/5 * * * * *";
-//    private static final String CRON_EVERY_FIVE_MINUTES = "0 0/5 * * * ?";
+    private static final String CRON_EVERY_FIVE_MINUTES = "0 0/5 * * * ?";
 
     @Autowired
     private LoansConsumerTask loansConsumerTask;
 
-    @Scheduled(cron = CRON_EVERY_FIVE_SECONDS)
+    @Scheduled(cron = CRON_EVERY_FIVE_MINUTES)
     public void runLoanConsumerTask() {
         try {
             LOGGER.info("Starting scheduled task LoansConsumerTask...");
