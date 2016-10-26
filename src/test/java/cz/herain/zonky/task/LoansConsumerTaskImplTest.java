@@ -1,5 +1,6 @@
 package cz.herain.zonky.task;
 
+import com.google.common.base.Joiner;
 import cz.herain.zonky.ZonkyRestConsumingApplicationTest;
 import cz.herain.zonky.domain.Loan;
 import cz.herain.zonky.service.LoanService;
@@ -7,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.slf4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -15,11 +17,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -35,6 +38,9 @@ public class LoansConsumerTaskImplTest extends ZonkyRestConsumingApplicationTest
 
     @Mock
     private LoanService loanServiceMock;
+
+    @Mock
+    private Logger logger;
 
     private Loan loan1;
     private Loan loan2;
@@ -93,10 +99,17 @@ public class LoansConsumerTaskImplTest extends ZonkyRestConsumingApplicationTest
 
         doNothing().when(loanServiceMock).saveLoans(filteredLoansList);
 
+        doNothing().when(logger).info(Joiner.on(", ").join(filteredLoansList));
+
+        // TESTED METHOD
         loansConsumerTask.consumeAndWriteNewLoans();
 
+        //verify that service methods was called
         verify(loanServiceMock, times(1)).filterOutAlreadyKnownLoans(Arrays.asList(loans));
         verify(loanServiceMock, times(1)).saveLoans(filteredLoansList);
+
+        //verify that correct message was logged
+        verify(logger, times(1)).info(Joiner.on(", ").join(filteredLoansList));
     }
 
     @Test
@@ -112,9 +125,17 @@ public class LoansConsumerTaskImplTest extends ZonkyRestConsumingApplicationTest
 
         doNothing().when(loanServiceMock).saveLoans(emptyFilteredLoansList);
 
+        doNothing().when(logger).info(anyString());
+
+        // TESTED METHOD
         loansConsumerTask.consumeAndWriteNewLoans();
 
+        //verify that service methods was called
         verify(loanServiceMock, times(1)).filterOutAlreadyKnownLoans(Arrays.asList(emptyLoans));
         verify(loanServiceMock, times(1)).saveLoans(emptyFilteredLoansList);
+
+        //verify that correct message was logged
+        verify(logger, never()).info(Joiner.on(", ").join(emptyFilteredLoansList));
+        verify(logger, times(1)).info(anyString());
     }
 }

@@ -5,7 +5,6 @@ import cz.herain.zonky.domain.Loan;
 import cz.herain.zonky.service.LoanService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,10 +21,11 @@ import java.util.List;
 @Component
 public class LoansConsumerTaskImpl implements LoansConsumerTask {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoansConsumerTaskImpl.class);
-
     private static final String ORDERING_HEADER_NAME = "X-Order";
     private static final String ORDERING_HEADER_VALUE = "-datePublished";
+
+    @Autowired
+    private Logger logger;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -53,9 +53,9 @@ public class LoansConsumerTaskImpl implements LoansConsumerTask {
         loanService.saveLoans(newLoans);
 
         if (CollectionUtils.isNotEmpty(newLoans)) {
-            LOGGER.info(Joiner.on(", ").join(newLoans));
+            logger.info(Joiner.on(", ").join(newLoans));
         } else {
-            LOGGER.info("No new loans found on marketplace...");
+            logger.info("No new loans found on marketplace...");
         }
     }
 }

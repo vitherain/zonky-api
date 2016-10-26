@@ -85,7 +85,10 @@ public class LoanServiceImplTest extends ZonkyRestConsumingApplicationTest {
     @Test
     public void testFilterOutEmptyListAndNotFail() {
         List<Loan> expectedLoans = Collections.emptyList();
+
+        // TESTED METHOD
         List<Loan> actualLoans = loanService.filterOutAlreadyKnownLoans(emptyLoans);
+
         assertThat(actualLoans, is(expectedLoans));
     }
 
@@ -93,6 +96,7 @@ public class LoanServiceImplTest extends ZonkyRestConsumingApplicationTest {
     public void testSaveLoans() {
         doNothing().when(loanDaoMock).saveAll(loans);
 
+        // TESTED METHOD
         loanService.saveLoans(loans);
 
         verify(loanDaoMock, times(1)).saveAll(loans);
