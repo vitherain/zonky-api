@@ -83,7 +83,7 @@ public class LoanServiceImplTest extends ZonkyRestConsumingApplicationTest {
     }
 
     @Test
-    public void testFilterOutEmptyListNotFail() {
+    public void testFilterOutEmptyListAndNotFail() {
         List<Loan> expectedLoans = Collections.emptyList();
         List<Loan> actualLoans = loanService.filterOutAlreadyKnownLoans(emptyLoans);
         assertThat(actualLoans, is(expectedLoans));
