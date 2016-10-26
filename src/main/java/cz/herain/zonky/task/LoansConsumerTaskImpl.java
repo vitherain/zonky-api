@@ -1,7 +1,7 @@
 package cz.herain.zonky.task;
 
 import com.google.common.base.Joiner;
-import cz.herain.zonky.entity.Loan;
+import cz.herain.zonky.domain.Loan;
 import cz.herain.zonky.service.LoanService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;

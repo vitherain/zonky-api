@@ -1,4 +1,4 @@
-package cz.herain.zonky.entity;
+package cz.herain.zonky.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

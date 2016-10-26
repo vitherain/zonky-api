@@ -1,7 +1,7 @@
 package cz.herain.zonky.service;
 
 import cz.herain.zonky.dao.LoanDao;
-import cz.herain.zonky.entity.Loan;
+import cz.herain.zonky.domain.Loan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package cz.herain.zonky.service;
 
-import cz.herain.zonky.entity.Loan;
+import cz.herain.zonky.domain.Loan;
 
 import java.util.List;
 

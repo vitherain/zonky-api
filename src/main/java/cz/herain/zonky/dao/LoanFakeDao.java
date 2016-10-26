@@ -1,6 +1,6 @@
 package cz.herain.zonky.dao;
 
-import cz.herain.zonky.entity.Loan;
+import cz.herain.zonky.domain.Loan;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
