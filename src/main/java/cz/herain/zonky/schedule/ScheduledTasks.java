@@ -21,7 +21,7 @@ public class ScheduledTasks {
     @Autowired
     private LoansConsumerTask loansConsumerTask;
 
-    @Scheduled(cron = CRON_EVERY_FIVE_SECONDS)
+    @Scheduled(cron = CRON_EVERY_FIVE_MINUTES)
     public void runLoanConsumerTask() {
         try {
             logger.info("Starting scheduled task LoansConsumerTask...");
